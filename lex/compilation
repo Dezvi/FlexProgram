@@ -1,0 +1,19 @@
+#! /bin/bash
+
+rm data/*
+
+cd ./src
+flex -o ../lex/flex.yy.c ./flex.cpp
+flex -o ../lex/parseo.yy.c ./parseo.cpp
+flex -o ../lex/busqueda_amazon.yy.c ./busqueda_amazon.cpp
+flex -o ../lex/busqueda_amazonErr.yy.c ./busqueda_amazonErr.cpp
+
+cd ..
+
+g++ -std=c++11 ./lex/flex.yy.c -o ./bin/flex -lfl ./src/HTTPDownloader.cpp -lcurl
+
+g++ -std=c++11 ./lex/parseo.yy.c -o ./bin/parseo -lfl ./src/HTTPDownloader.cpp -lcurl
+
+g++ -std=c++11 ./lex/busqueda_amazon.yy.c -o ./bin/busqueda_amazon -lfl ./src/HTTPDownloader.cpp -lcurl
+
+g++ -std=c++11 ./lex/busqueda_amazonErr.yy.c -o ./bin/busqueda_amazonErr -lfl ./src/HTTPDownloader.cpp -lcurl
